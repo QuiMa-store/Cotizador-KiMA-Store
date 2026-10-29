@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#173b32">
-  <meta name="description" content="Cotizador estimado de importaciones AliExpress a Guatemala para Hogar y Más.">
+  <meta name="description" content="Cotizador KiMa Store: costo de importación, impuestos y rentabilidad para Guatemala.">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
-  <title>Cotizador AliExpress GT</title>
+  <title>Cotizador KiMa Store</title>
   <style>
     :root{color-scheme:light;--ink:#182522;--muted:#63716d;--line:#dbe3df;--green:#173b32;--pale:#edf4f0;--white:#fff;--warn:#fff4dc}
     *{box-sizing:border-box}body{margin:0;background:#f5f7f6;color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
@@ -22,9 +22,9 @@
 </head>
 <body>
 <header>
-  <div class="eyebrow">Hogar y Más · Guatemala</div>
-  <h1>Cotizador AliExpress</h1>
-  <p>Estimá el costo de importación y el margen de reventa desde tu celular.</p>
+  <div class="eyebrow">KiMa Store · Guatemala</div>
+  <h1>Cotizador KiMa Store</h1>
+  <p>Estimá el costo de importación, impuestos y margen de reventa desde tu celular.</p>
 </header>
 <main>
   <section class="card">
@@ -32,7 +32,8 @@
     <div class="grid">
       <div class="field full"><label for="name">Producto / nota (opcional)</label><input id="name" type="text" placeholder="Ej. CS Model Saga de Géminis"></div>
       <div class="field"><label for="product">Precio producto (Q)</label><input id="product" type="number" min="0" step="0.01" value="500" inputmode="decimal"></div>
-      <div class="field"><label for="shipping">Envío AliExpress (Q)</label><input id="shipping" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
+      <div class="field"><label for="shipping">Envío internacional / a casillero (Q)</label><input id="shipping" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
+      <div class="field"><label for="sellerFee">Comisión de vendedor (%)</label><input id="sellerFee" type="number" min="0" max="100" step="0.1" value="0" inputmode="decimal"></div>
       <div class="field"><label for="qty">Cantidad de unidades</label><input id="qty" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
       <div class="field"><label for="other">Otros gastos (Q)</label><input id="other" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
     </div>
@@ -44,23 +45,27 @@
     <div class="grid">
       <div class="field"><label for="dai">DAI estimado (%)</label><input id="dai" type="number" min="0" max="100" step="0.1" value="15" inputmode="decimal"></div>
       <div class="field"><label for="iva">IVA (%)</label><input id="iva" type="number" min="0" max="100" step="0.1" value="12" inputmode="decimal"></div>
-      <div class="field full"><label for="courier">Cargo courier / MailAmericas (Q)</label><input id="courier" type="number" min="0" step="0.01" value="159" inputmode="decimal"></div>
+      <div class="field"><label for="courierPct">Gastos courier (%)</label><input id="courierPct" type="number" min="0" max="100" step="0.5" value="6" inputmode="decimal"></div>
+      <div class="field"><label for="courierFixed">Cargo fijo courier (Q)</label><input id="courierFixed" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
     </div>
-    <p class="hint">Q159 es solo la referencia de un cobro anterior; no es una tarifa fija. Confirmá el DAI del código arancelario aplicable.</p>
+    <p class="hint">El porcentaje de courier es editable (por ejemplo, 5%, 6% o 7%) y se estima sobre producto + envío. El cargo fijo es opcional. Confirmá las tarifas reales y el DAI según la clasificación arancelaria.</p>
   </section>
 
   <section class="card">
     <h2>3. Costo estimado puesto en Guatemala</h2>
     <div class="result" aria-live="polite">
       <div class="line"><span>Producto + envío</span><strong id="base">Q0.00</strong></div>
+      <div class="line"><span>Comisión vendedor</span><strong id="sellerFeeValue">Q0.00</strong></div>
+      <div class="line"><span>Base estimada para impuestos</span><strong id="taxBase">Q0.00</strong></div>
       <div class="line"><span>DAI estimado</span><strong id="daiValue">Q0.00</strong></div>
       <div class="line"><span>IVA estimado</span><strong id="ivaValue">Q0.00</strong></div>
-      <div class="line"><span>Courier</span><strong id="courierValue">Q0.00</strong></div>
+      <div class="line"><span>Gastos courier por porcentaje</span><strong id="courierPctValue">Q0.00</strong></div>
+      <div class="line"><span>Cargo fijo courier</span><strong id="courierFixedValue">Q0.00</strong></div>
       <div class="line"><span>Otros gastos</span><strong id="otherValue">Q0.00</strong></div>
       <div class="line grand"><span>COSTO TOTAL</span><strong id="total">Q0.00</strong></div>
       <div class="line"><span>Costo por unidad</span><strong id="unit">Q0.00</strong></div>
     </div>
-    <p class="small">Modelo simplificado: calcula DAI sobre producto + envío, y el IVA sobre esa base más DAI. La base aduanera real puede diferir.</p>
+    <p class="small">Modelo simplificado: incluye la comisión de vendedor en la base estimada; calcula DAI sobre esa base e IVA sobre base + DAI. La base aduanera real puede diferir. Los gastos porcentuales de courier son una provisión editable, no una tarifa oficial.</p>
   </section>
 
   <section class="card">
@@ -87,32 +92,36 @@
     <strong>Importante:</strong> esta herramienta es para presupuestar, no sustituye una liquidación de Aduanas. El arancel depende de la clasificación del producto; los impuestos pueden calcularse sobre un valor aduanero distinto y el courier puede cobrar otros conceptos. Verificá los importes antes de comprar.
   </section>
 </main>
-<footer>Versión 1.0 · Funciona en el navegador. No guarda ni envía tus datos a un servidor.</footer>
+<footer>Versión 2.0 · Funciona en el navegador. No guarda ni envía tus datos a un servidor.</footer>
 <script>
-const ids = ['name','product','shipping','qty','other','dai','iva','courier','sale','fee','localShip','pack'];
+const ids = ['name','product','shipping','sellerFee','qty','other','dai','iva','courierPct','courierFixed','sale','fee','localShip','pack'];
 const el = id => document.getElementById(id);
 const num = id => Math.max(0, Number(el(id).value) || 0);
 const money = n => 'Q' + n.toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2});
 function calc(){
   const product=num('product'), shipping=num('shipping'), qty=Math.max(1,Math.floor(num('qty'))), other=num('other');
-  const base=product+shipping, dai=base*num('dai')/100, iva=(base+dai)*num('iva')/100;
-  const courier=num('courier'), total=base+dai+iva+courier+other, unit=total/qty;
+  const base=product+shipping, sellerFee=product*num('sellerFee')/100, taxBase=base+sellerFee;
+  const dai=taxBase*num('dai')/100, iva=(taxBase+dai)*num('iva')/100;
+  const courierPct=base*num('courierPct')/100, courierFixed=num('courierFixed');
+  const total=base+sellerFee+dai+iva+courierPct+courierFixed+other, unit=total/qty;
   const sale=num('sale'), fee=sale*num('fee')/100, profit=sale-unit-fee-num('localShip')-num('pack');
   const margin=sale>0?profit/sale*100:0;
-  el('base').textContent=money(base); el('daiValue').textContent=money(dai); el('ivaValue').textContent=money(iva);
-  el('courierValue').textContent=money(courier); el('otherValue').textContent=money(other); el('total').textContent=money(total); el('unit').textContent=money(unit);
+  el('base').textContent=money(base); el('sellerFeeValue').textContent=money(sellerFee); el('taxBase').textContent=money(taxBase);
+  el('daiValue').textContent=money(dai); el('ivaValue').textContent=money(iva);
+  el('courierPctValue').textContent=money(courierPct); el('courierFixedValue').textContent=money(courierFixed);
+  el('otherValue').textContent=money(other); el('total').textContent=money(total); el('unit').textContent=money(unit);
   el('profit').textContent=money(profit); el('profit').style.color=profit>=0?'#17633e':'#b42318';
   el('margin').textContent=margin.toFixed(1)+'%'; el('lotProfit').textContent=money(profit*qty);
-  window.quote={name:el('name').value,product,shipping,qty,other,daiPct:num('dai'),ivaPct:num('iva'),dai,iva,courier,total,unit,sale,feePct:num('fee'),profit,margin};
+  window.quote={name:el('name').value,product,shipping,qty,other,sellerFeePct:num('sellerFee'),sellerFee,taxBase,daiPct:num('dai'),ivaPct:num('iva'),dai,iva,courierPctPct:num('courierPct'),courierPct,courierFixed,total,unit,sale,feePct:num('fee'),profit,margin};
 }
 ids.forEach(id=>el(id).addEventListener('input',calc));
 el('copy').addEventListener('click',async()=>{
   calc(); const q=window.quote;
-  const txt=`COTIZADOR ALIEXPRESS — GUATEMALA\nProducto: ${q.name||'Sin nombre'}\nProducto: ${money(q.product)}\nEnvío: ${money(q.shipping)}\nUnidades: ${q.qty}\nDAI supuesto (${q.daiPct}%): ${money(q.dai)}\nIVA supuesto (${q.ivaPct}%): ${money(q.iva)}\nCourier: ${money(q.courier)}\nOtros gastos: ${money(q.other)}\nCosto total estimado: ${money(q.total)}\nCosto unitario: ${money(q.unit)}\nPrecio venta: ${money(q.sale)}\nComisión tarjeta: ${q.feePct}%\nGanancia unitaria estimada: ${money(q.profit)}\nMargen estimado: ${q.margin.toFixed(1)}%`;
+  const txt=`COTIZADOR KIMA STORE — GUATEMALA\nProducto: ${q.name||'Sin nombre'}\nProducto: ${money(q.product)}\nEnvío internacional / casillero: ${money(q.shipping)}\nUnidades: ${q.qty}\nComisión vendedor (${q.sellerFeePct}%): ${money(q.sellerFee)}\nBase estimada para impuestos: ${money(q.taxBase)}\nDAI supuesto (${q.daiPct}%): ${money(q.dai)}\nIVA supuesto (${q.ivaPct}%): ${money(q.iva)}\nGastos courier (${q.courierPctPct}%): ${money(q.courierPct)}\nCargo fijo courier: ${money(q.courierFixed)}\nOtros gastos: ${money(q.other)}\nCosto total estimado: ${money(q.total)}\nCosto unitario: ${money(q.unit)}\nPrecio venta: ${money(q.sale)}\nComisión tarjeta: ${q.feePct}%\nGanancia unitaria estimada: ${money(q.profit)}\nMargen estimado: ${q.margin.toFixed(1)}%`;
   try{await navigator.clipboard.writeText(txt);el('copyStatus').textContent='Cotización copiada. Ya podés pegarla en tus notas o mensaje.'}
   catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();el('copyStatus').textContent='Cotización copiada.'}
 });
-el('reset').addEventListener('click',()=>{const defaults={name:'',product:'500',shipping:'0',qty:'1',other:'0',dai:'15',iva:'12',courier:'159',sale:'350',fee:'0',localShip:'0',pack:'0'};for(const [k,v] of Object.entries(defaults))el(k).value=v;calc();el('copyStatus').textContent=''});
+el('reset').addEventListener('click',()=>{const defaults={name:'',product:'500',shipping:'0',sellerFee:'0',qty:'1',other:'0',dai:'15',iva:'12',courierPct:'6',courierFixed:'0',sale:'350',fee:'0',localShip:'0',pack:'0'};for(const [k,v] of Object.entries(defaults))el(k).value=v;calc();el('copyStatus').textContent=''});
 if('serviceWorker' in navigator && location.protocol.startsWith('http')) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 calc();
 </script>
