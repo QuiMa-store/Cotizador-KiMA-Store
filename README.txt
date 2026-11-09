@@ -1,31 +1,17 @@
-COTIZADOR ALIEXPRESS GUATEMALA — ARCHIVOS PARA PUBLICAR GRATIS
+REX STORE - COTIZADOR GENERAL
 
-Contenido:
-- index.html: cotizador
-- manifest.webmanifest: configuración instalable
-- sw.js: caché para uso sin conexión tras la primera visita
-- icons/: iconos de la aplicación
+ARCHIVOS:
+- index.html
+- manifest.webmanifest
+- sw.js
+- carpeta icons/ (icon-192.png e icon-512.png)
 
-Publicación gratuita recomendada: GitHub Pages.
+PUBLICACIÓN EN GITHUB PAGES:
+1. Abrí el repositorio de GitHub donde publicaste Cotizador-KiMA-Store.
+2. Subí/reemplazá los archivos en la raíz del repositorio.
+3. Asegurate de que index.html quede directamente en la raíz, no dentro de otra carpeta.
+4. En Settings > Pages, mantené Deploy from a branch, branch main y folder /(root).
+5. Guardá y esperá a que GitHub Pages publique los cambios.
 
-PASOS:
-1. En Android, descarga y descomprime el ZIP. Para publicar desde el teléfono, es más fácil usar el navegador en modo escritorio o una computadora.
-2. Crea/inicia sesión en https://github.com/
-3. Crea un repositorio público nuevo, por ejemplo: cotizador-aliexpress-gt
-4. Sube TODOS los archivos y carpetas de este paquete a la raíz del repositorio (no subas solamente el ZIP).
-5. En el repositorio, entra a Settings > Pages.
-6. En “Build and deployment”, selecciona “Deploy from a branch”; Branch: “main”; folder: “/(root)”; guarda.
-7. Espera a que GitHub publique el sitio. La URL normalmente será:
-   https://TU-USUARIO.github.io/cotizador-aliexpress-gt/
-   Sustituye TU-USUARIO por tu nombre de usuario real de GitHub.
-8. Abre esa URL en Chrome para Android. Espera a que cargue por HTTPS.
-9. Pulsa el menú ⋮ de Chrome y busca “Instalar aplicación” o “Añadir a pantalla de inicio”. El texto puede variar.
-10. Confirma. Se agregará un icono “Cotizador GT” a tu pantalla de inicio.
-
-IMPORTANTE:
-- El sitio y el repositorio deben ser públicos para usar GitHub Pages gratis en el plan gratuito.
-- No pongas datos privados en el repositorio.
-- Si actualizas los archivos, el sitio se actualizará después de que termine la publicación.
-- El cotizador no guarda cotizaciones automáticamente; usa “Copiar cotización” para copiar el resultado.
-- Los porcentajes son editables y solo estimativos. Confirma clasificación arancelaria, base aduanera, IVA y cargos del courier. Q159 no es una tarifa fija.
-- El cálculo simplificado usa DAI = (producto + envío) × tasa DAI e IVA = (producto + envío + DAI) × 12%. Aduanas puede aplicar otra base.
+La app funciona en navegador y puede instalarse como PWA cuando se sirve por HTTPS.
+El icono es provisional tipográfico (R); no se encontró una imagen/logo de REX STORE disponible en el contexto actual.

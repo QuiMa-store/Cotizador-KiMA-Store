@@ -2,128 +2,177 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#173b32">
-  <meta name="description" content="Cotizador KiMa Store: costo de importación, impuestos y rentabilidad para Guatemala.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17243b">
+  <meta name="description" content="Cotizador general de compras, importación y rentabilidad de REX STORE.">
+  <title>REX STORE | Cotizador General</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
-  <title>Cotizador KiMa Store</title>
   <style>
-    :root{color-scheme:light;--ink:#182522;--muted:#63716d;--line:#dbe3df;--green:#173b32;--pale:#edf4f0;--white:#fff;--warn:#fff4dc}
-    *{box-sizing:border-box}body{margin:0;background:#f5f7f6;color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-    header{background:var(--green);color:#fff;padding:24px 18px 22px}header .eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.8}h1{font-size:25px;line-height:1.15;margin:7px 0}header p{margin:8px 0 0;color:#e1ebe6;font-size:14px}
-    main{max-width:720px;margin:0 auto;padding:16px;display:grid;gap:14px}.card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 2px 8px #18252208}
-    h2{font-size:18px;margin:0 0 14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}label{font-size:13px;color:#43514c;font-weight:650}input,select{width:100%;min-width:0;padding:12px;border:1px solid #cbd6d0;border-radius:10px;background:#fff;color:var(--ink);font:inherit}input:focus,select:focus{outline:2px solid #8ab9a4;outline-offset:1px}.hint{font-size:12px;color:var(--muted);margin:5px 0 0}
-    .result{background:var(--pale);border-radius:12px;padding:14px;display:grid;gap:9px}.line{display:flex;justify-content:space-between;gap:12px;align-items:baseline}.line span{color:#4b5b54}.line strong{font-variant-numeric:tabular-nums;text-align:right}.grand{border-top:1px solid #c9d9d0;padding-top:12px;margin-top:3px}.grand span{font-weight:750;color:var(--ink)}.grand strong{font-size:25px;color:var(--green)}
-    .buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}button{border:0;border-radius:10px;background:var(--green);color:white;font:600 14px system-ui;padding:12px 14px;cursor:pointer}button.secondary{background:#e9efec;color:var(--green);border:1px solid #d4dfd9}
-    .notice{background:var(--warn);border:1px solid #ead7a7;border-radius:12px;padding:12px;font-size:13px;color:#57451d}.small{font-size:12px;color:var(--muted)}footer{text-align:center;padding:4px 16px 24px;color:var(--muted);font-size:12px}
-    @media(max-width:420px){.grid{grid-template-columns:1fr 1fr}.card{padding:14px}header{padding:21px 16px}}
+    :root{--navy:#17243b;--navy2:#243653;--ink:#172033;--muted:#64748b;--line:#e2e8f0;--bg:#f3f6fa;--card:#fff;--green:#087f5b;--orange:#c46b16;--shadow:0 10px 30px rgba(23,36,59,.08)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}
+    .wrap{max-width:1040px;margin:auto;padding:22px 16px 50px}
+    header{background:linear-gradient(135deg,var(--navy),#314a70);color:#fff;border-radius:22px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:var(--shadow)}
+    .brand{display:flex;align-items:center;gap:14px}.mark{width:58px;height:58px;border:2px solid #fff;border-radius:16px;display:grid;place-items:center;font-weight:900;font-size:26px;letter-spacing:-2px}
+    h1{font-size:clamp(25px,5vw,36px);margin:0;letter-spacing:.5px}header p{margin:5px 0 0;color:#dbe6f5;font-size:13px;letter-spacing:1.4px}
+    .tag{font-size:12px;color:#dbe6f5;text-align:right}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow);min-width:0}
+    .wide{grid-column:1/-1}.section-title{font-size:16px;font-weight:800;margin:0 0 14px;display:flex;align-items:center;gap:9px}
+    .num{width:27px;height:27px;background:#eaf0f8;color:var(--navy);border-radius:9px;display:grid;place-items:center;font-size:13px}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px}
+    input,select{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:11px 12px;font-size:15px;background:#fff;color:var(--ink);outline:none}
+    input:focus,select:focus{border-color:#42638f;box-shadow:0 0 0 3px #42638f20}
+    .unit{position:relative}.unit input{padding-left:34px}.unit span{position:absolute;left:12px;top:11px;color:var(--muted);font-size:14px}
+    .hint{font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.45}
+    .results{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{background:#f5f8fc;border:1px solid #e5edf6;border-radius:13px;padding:13px}
+    .metric small{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-bottom:5px}.metric strong{font-size:clamp(17px,3vw,23px);font-variant-numeric:tabular-nums}
+    .green{color:var(--green)}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{padding:10px 7px;border-bottom:1px solid var(--line);text-align:left}.table th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px}.table td:last-child,.table th:last-child{text-align:right;font-variant-numeric:tabular-nums}.table tr.total td{font-weight:800;border-top:2px solid #cbd5e1}
+    .split{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:start}
+    .callout{background:#eef5ff;border:1px solid #d8e7fb;border-radius:12px;padding:12px;font-size:12px;line-height:1.5;color:#344967}
+    .sale-panel{background:var(--navy);color:#fff;border-radius:16px;padding:17px}.sale-panel small{color:#cbd8e9}.sale-panel strong{font-size:29px;display:block;margin:5px 0;font-variant-numeric:tabular-nums}
+    .sale-panel .sub{font-size:12px;color:#dbe6f5}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    button{border:0;border-radius:10px;padding:11px 15px;font-weight:750;cursor:pointer;background:var(--navy);color:white}button.secondary{background:#e8edf4;color:var(--navy)}
+    footer{text-align:center;color:var(--muted);font-size:11px;margin-top:20px}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.fields{grid-template-columns:1fr 1fr}.split{grid-template-columns:1fr}.results{grid-template-columns:1fr 1fr}header{padding:18px}.tag{display:none}}
+    @media(max-width:390px){.fields{grid-template-columns:1fr}.results{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-<header>
-  <div class="eyebrow">KiMa Store · Guatemala</div>
-  <h1>Cotizador KiMa Store</h1>
-  <p>Estimá el costo de importación, impuestos y margen de reventa desde tu celular.</p>
-</header>
-<main>
-  <section class="card">
-    <h2>1. Datos de compra</h2>
-    <div class="grid">
-      <div class="field full"><label for="name">Producto / nota (opcional)</label><input id="name" type="text" placeholder="Ej. CS Model Saga de Géminis"></div>
-      <div class="field"><label for="product">Precio producto (Q)</label><input id="product" type="number" min="0" step="0.01" value="500" inputmode="decimal"></div>
-      <div class="field"><label for="shipping">Envío internacional / a casillero (Q)</label><input id="shipping" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
-      <div class="field"><label for="sellerFee">Comisión de vendedor (%)</label><input id="sellerFee" type="number" min="0" max="100" step="0.1" value="0" inputmode="decimal"></div>
-      <div class="field"><label for="qty">Cantidad de unidades</label><input id="qty" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
-      <div class="field"><label for="other">Otros gastos (Q)</label><input id="other" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
-    </div>
-    <p class="hint">Ingresá el envío por separado. Si AliExpress muestra envío gratis, dejá Q0.</p>
-  </section>
+<div class="wrap">
+  <header>
+    <div class="brand"><div class="mark">R</div><div><h1>REX STORE</h1><p>COTIZADOR GENERAL</p></div></div>
+    <div class="tag">COMPRAS · IMPORTACIÓN<br>PRECIOS · RENTABILIDAD</div>
+  </header>
 
-  <section class="card">
-    <h2>2. Impuestos y courier</h2>
-    <div class="grid">
-      <div class="field"><label for="dai">DAI estimado (%)</label><input id="dai" type="number" min="0" max="100" step="0.1" value="15" inputmode="decimal"></div>
-      <div class="field"><label for="iva">IVA (%)</label><input id="iva" type="number" min="0" max="100" step="0.1" value="12" inputmode="decimal"></div>
-      <div class="field"><label for="courierPct">Gastos courier (%)</label><input id="courierPct" type="number" min="0" max="100" step="0.5" value="6" inputmode="decimal"></div>
-      <div class="field"><label for="courierFixed">Cargo fijo courier (Q)</label><input id="courierFixed" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
-    </div>
-    <p class="hint">El porcentaje de courier es editable (por ejemplo, 5%, 6% o 7%) y se estima sobre producto + envío. El cargo fijo es opcional. Confirmá las tarifas reales y el DAI según la clasificación arancelaria.</p>
-  </section>
+  <main class="grid">
+    <section class="card">
+      <h2 class="section-title"><span class="num">1</span> Costo de compra</h2>
+      <div class="fields">
+        <div class="field"><label for="productCost">Costo del producto (USD)</label><div class="unit"><span>$</span><input id="productCost" type="number" min="0" step="0.01" value="32"></div></div>
+        <div class="field"><label for="purchaseTax">Impuesto de compra (%)</label><input id="purchaseTax" type="number" min="0" step="0.1" value="7"></div>
+        <div class="field"><label for="exchange">Tipo de cambio (Q/USD)</label><span><input id="exchange" type="number" min="0" step="0.01" value="7.7"></span></div>
+        <div class="field"><label for="factor">Factor compra + importación</label><input id="factor" type="number" min="1" step="0.001" value="1.656"></div>
+      </div>
+      <p class="hint">El 7% es un valor predeterminado editable; el impuesto real depende de la tienda, dirección de entrega y compra.</p>
+    </section>
 
-  <section class="card">
-    <h2>3. Costo estimado puesto en Guatemala</h2>
-    <div class="result" aria-live="polite">
-      <div class="line"><span>Producto + envío</span><strong id="base">Q0.00</strong></div>
-      <div class="line"><span>Comisión vendedor</span><strong id="sellerFeeValue">Q0.00</strong></div>
-      <div class="line"><span>Base estimada para impuestos</span><strong id="taxBase">Q0.00</strong></div>
-      <div class="line"><span>DAI estimado</span><strong id="daiValue">Q0.00</strong></div>
-      <div class="line"><span>IVA estimado</span><strong id="ivaValue">Q0.00</strong></div>
-      <div class="line"><span>Gastos courier por porcentaje</span><strong id="courierPctValue">Q0.00</strong></div>
-      <div class="line"><span>Cargo fijo courier</span><strong id="courierFixedValue">Q0.00</strong></div>
-      <div class="line"><span>Otros gastos</span><strong id="otherValue">Q0.00</strong></div>
-      <div class="line grand"><span>COSTO TOTAL</span><strong id="total">Q0.00</strong></div>
-      <div class="line"><span>Costo por unidad</span><strong id="unit">Q0.00</strong></div>
-    </div>
-    <p class="small">Modelo simplificado: incluye la comisión de vendedor en la base estimada; calcula DAI sobre esa base e IVA sobre base + DAI. La base aduanera real puede diferir. Los gastos porcentuales de courier son una provisión editable, no una tarifa oficial.</p>
-  </section>
+    <section class="card">
+      <h2 class="section-title"><span class="num">2</span> Resumen de compra</h2>
+      <table class="table">
+        <tbody>
+          <tr><td>Producto</td><td id="outProductUsd">$32.00</td></tr>
+          <tr><td>Impuesto de compra</td><td id="outTaxUsd">$2.24</td></tr>
+          <tr class="total"><td>Total compra USD</td><td id="outTotalUsd">$34.24</td></tr>
+          <tr><td>Tipo de cambio</td><td id="outFx">Q7.70</td></tr>
+          <tr class="total"><td>Total compra GTQ</td><td id="outPurchaseQ">Q263.65</td></tr>
+        </tbody>
+      </table>
+    </section>
 
-  <section class="card">
-    <h2>4. Precio de venta y ganancia</h2>
-    <div class="grid">
-      <div class="field"><label for="sale">Precio de venta por unidad (Q)</label><input id="sale" type="number" min="0" step="0.01" value="350" inputmode="decimal"></div>
-      <div class="field"><label for="fee">Comisión de tarjeta (%)</label><input id="fee" type="number" min="0" max="100" step="0.1" value="0" inputmode="decimal"></div>
-      <div class="field"><label for="localShip">Envío nacional absorbido por unidad (Q)</label><input id="localShip" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
-      <div class="field"><label for="pack">Empaque / otros por unidad (Q)</label><input id="pack" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
-    </div>
-    <div class="result" style="margin-top:14px">
-      <div class="line"><span>Ganancia estimada por unidad</span><strong id="profit">Q0.00</strong></div>
-      <div class="line"><span>Margen sobre venta</span><strong id="margin">0.0%</strong></div>
-      <div class="line"><span>Ganancia potencial del lote</span><strong id="lotProfit">Q0.00</strong></div>
-    </div>
-    <div class="buttons">
-      <button id="copy">Copiar cotización</button>
-      <button id="reset" class="secondary">Restablecer ejemplo</button>
-    </div>
-    <p class="small" id="copyStatus" role="status"></p>
-  </section>
+    <section class="card wide">
+      <h2 class="section-title"><span class="num">3</span> Costo de importación estimado</h2>
+      <div class="split">
+        <div>
+          <table class="table">
+            <thead><tr><th>Concepto</th><th>Porcentaje</th><th>Monto</th></tr></thead>
+            <tbody>
+              <tr><td>Transporte aéreo</td><td>24%</td><td id="air">Q0.00</td></tr>
+              <tr><td>Desaduanaje</td><td>26%</td><td id="customs">Q0.00</td></tr>
+              <tr><td>IVA / impuestos estimados</td><td>23%</td><td id="importVat">Q0.00</td></tr>
+              <tr><td>Aranceles estimados</td><td>25%</td><td id="duties">Q0.00</td></tr>
+              <tr><td>Seguro</td><td>2%</td><td id="insurance">Q0.00</td></tr>
+              <tr class="total"><td>Total adicional</td><td>100%</td><td id="importTotal">Q0.00</td></tr>
+            </tbody>
+          </table>
+          <p class="hint">Distribución estimada del adicional, según el modelo operativo de REX STORE. No sustituye la liquidación aduanera real: DAI e IVA dependen de la clasificación y valor aduanero.</p>
+        </div>
+        <div>
+          <div class="metric"><small>Compra en quetzales</small><strong id="purchaseMetric">Q0.00</strong></div>
+          <div class="metric" style="margin-top:9px"><small>Compra × factor</small><strong id="factorTotal">Q0.00</strong></div>
+          <div class="metric" style="margin-top:9px"><small>Costo adicional de importación</small><strong id="importMetric">Q0.00</strong></div>
+          <div class="metric" style="margin-top:9px"><small>Costo total puesto en Guatemala</small><strong class="green" id="landedMetric">Q0.00</strong></div>
+        </div>
+      </div>
+    </section>
 
-  <section class="notice">
-    <strong>Importante:</strong> esta herramienta es para presupuestar, no sustituye una liquidación de Aduanas. El arancel depende de la clasificación del producto; los impuestos pueden calcularse sobre un valor aduanero distinto y el courier puede cobrar otros conceptos. Verificá los importes antes de comprar.
-  </section>
-</main>
-<footer>Versión 2.0 · Funciona en el navegador. No guarda ni envía tus datos a un servidor.</footer>
+    <section class="card">
+      <h2 class="section-title"><span class="num">4</span> Precio y margen</h2>
+      <div class="field"><label for="margin">Margen bruto deseado (%)</label><input id="margin" type="number" min="0" max="99.9" step="0.5" value="35"></div>
+      <p class="hint">Precio antes de impuesto = costo total ÷ (1 − margen). El margen es editable.</p>
+      <div class="metric" style="margin-top:12px"><small>Precio de venta antes de impuesto</small><strong id="salePrice">Q0.00</strong></div>
+      <div class="metric" style="margin-top:9px"><small>Ganancia bruta</small><strong class="green" id="grossProfit">Q0.00</strong></div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title"><span class="num">5</span> Impuesto por venta</h2>
+      <div class="fields">
+        <div class="field"><label for="saleTax">Porcentaje editable (%)</label><input id="saleTax" type="number" min="0" max="100" step="0.5" value="12"></div>
+        <div class="field"><label for="taxMode">Tipo de escenario</label>
+          <select id="taxMode"><option value="vat">IVA general (referencial)</option><option value="small">Pequeño contribuyente (5%)</option><option value="none">Sin impuesto adicional</option></select>
+        </div>
+      </div>
+      <p class="hint">Se calcula sobre el precio de venta, no sobre el margen. Elegí el escenario y ajustá el porcentaje según corresponda.</p>
+      <div class="metric" style="margin-top:12px"><small>Impuesto calculado sobre venta</small><strong id="saleTaxAmount">Q0.00</strong></div>
+      <div class="metric" style="margin-top:9px"><small>Precio final al cliente</small><strong id="finalPrice">Q0.00</strong></div>
+    </section>
+
+    <section class="card wide">
+      <h2 class="section-title"><span class="num">6</span> Resultado de rentabilidad</h2>
+      <div class="results">
+        <div class="metric"><small>Costo total</small><strong id="resultCost">Q0.00</strong></div>
+        <div class="metric"><small>Ganancia bruta</small><strong id="resultGross">Q0.00</strong></div>
+        <div class="metric"><small>Ganancia estimada después de impuesto*</small><strong class="green" id="netProfit">Q0.00</strong></div>
+      </div>
+      <div class="callout" style="margin-top:13px" id="taxNote">En el escenario de IVA general, el IVA cobrado al cliente se muestra por separado. El pago neto a SAT depende del crédito fiscal de compras y gastos; por eso no se resta automáticamente de la ganancia.</div>
+      <div class="actions"><button onclick="window.print()">Imprimir / Guardar PDF</button><button class="secondary" id="reset">Restablecer ejemplo</button></div>
+    </section>
+  </main>
+  <footer>REX STORE · Cotizador General · Herramienta estimativa para uso comercial</footer>
+</div>
 <script>
-const ids = ['name','product','shipping','sellerFee','qty','other','dai','iva','courierPct','courierFixed','sale','fee','localShip','pack'];
-const el = id => document.getElementById(id);
-const num = id => Math.max(0, Number(el(id).value) || 0);
-const money = n => 'Q' + n.toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2});
-function calc(){
-  const product=num('product'), shipping=num('shipping'), qty=Math.max(1,Math.floor(num('qty'))), other=num('other');
-  const base=product+shipping, sellerFee=product*num('sellerFee')/100, taxBase=base+sellerFee;
-  const dai=taxBase*num('dai')/100, iva=(taxBase+dai)*num('iva')/100;
-  const courierPct=base*num('courierPct')/100, courierFixed=num('courierFixed');
-  const total=base+sellerFee+dai+iva+courierPct+courierFixed+other, unit=total/qty;
-  const sale=num('sale'), fee=sale*num('fee')/100, profit=sale-unit-fee-num('localShip')-num('pack');
-  const margin=sale>0?profit/sale*100:0;
-  el('base').textContent=money(base); el('sellerFeeValue').textContent=money(sellerFee); el('taxBase').textContent=money(taxBase);
-  el('daiValue').textContent=money(dai); el('ivaValue').textContent=money(iva);
-  el('courierPctValue').textContent=money(courierPct); el('courierFixedValue').textContent=money(courierFixed);
-  el('otherValue').textContent=money(other); el('total').textContent=money(total); el('unit').textContent=money(unit);
-  el('profit').textContent=money(profit); el('profit').style.color=profit>=0?'#17633e':'#b42318';
-  el('margin').textContent=margin.toFixed(1)+'%'; el('lotProfit').textContent=money(profit*qty);
-  window.quote={name:el('name').value,product,shipping,qty,other,sellerFeePct:num('sellerFee'),sellerFee,taxBase,daiPct:num('dai'),ivaPct:num('iva'),dai,iva,courierPctPct:num('courierPct'),courierPct,courierFixed,total,unit,sale,feePct:num('fee'),profit,margin};
+const $ = id => document.getElementById(id);
+const money = n => 'Q' + (Number.isFinite(n)?n:0).toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2});
+const usd = n => '$' + (Number.isFinite(n)?n:0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const val = id => Math.max(0, Number($(id).value)||0);
+function calculate(){
+  const product=val('productCost'), pTax=val('purchaseTax')/100, fx=val('exchange'), factor=Math.max(1,val('factor'));
+  const totalUsd=product*(1+pTax), purchaseQ=totalUsd*fx, factorTotal=purchaseQ*factor;
+  const importCost=Math.max(0,factorTotal-purchaseQ), landed=purchaseQ+importCost;
+  $('outProductUsd').textContent=usd(product); $('outTaxUsd').textContent=usd(product*pTax);
+  $('outTotalUsd').textContent=usd(totalUsd); $('outFx').textContent='Q'+fx.toFixed(2);
+  $('outPurchaseQ').textContent=money(purchaseQ);
+  $('purchaseMetric').textContent=money(purchaseQ); $('factorTotal').textContent=money(factorTotal);
+  $('importMetric').textContent=money(importCost); $('landedMetric').textContent=money(landed);
+  $('air').textContent=money(importCost*.24); $('customs').textContent=money(importCost*.26);
+  $('importVat').textContent=money(importCost*.23); $('duties').textContent=money(importCost*.25);
+  $('insurance').textContent=money(importCost*.02); $('importTotal').textContent=money(importCost);
+  const margin=Math.min(99.9,val('margin'))/100, sale=margin>=1?0:landed/(1-margin);
+  const gross=sale-landed, mode=$('taxMode').value;
+  let taxPct=val('saleTax')/100;
+  if(mode==='small' && $('saleTax').dataset.touched!=='1') taxPct=.05;
+  if(mode==='vat' && $('saleTax').dataset.touched!=='1') taxPct=.12;
+  if(mode==='none') taxPct=0;
+  $('saleTax').value=(taxPct*100).toString();
+  const tax=sale*taxPct, final=sale+tax;
+  const net=mode==='small'?gross-tax:gross;
+  $('salePrice').textContent=money(sale); $('grossProfit').textContent=money(gross);
+  $('saleTaxAmount').textContent=money(tax); $('finalPrice').textContent=money(final);
+  $('resultCost').textContent=money(landed); $('resultGross').textContent=money(gross); $('netProfit').textContent=money(net);
+  $('taxNote').textContent=mode==='vat'
+   ? 'IVA general: el IVA de venta se calcula sobre el precio de venta y se agrega al precio final. El pago neto a SAT depende del IVA crédito fiscal válido de compras y gastos; no se resta automáticamente de la ganancia.'
+   : mode==='small'
+   ? 'Pequeño contribuyente: el porcentaje se aplica sobre el ingreso bruto de la venta. La ganancia estimada descuenta ese impuesto; confirmá tu régimen y obligaciones vigentes con SAT.'
+   : 'Sin impuesto adicional: se muestra la rentabilidad comercial antes de obligaciones fiscales.';
 }
-ids.forEach(id=>el(id).addEventListener('input',calc));
-el('copy').addEventListener('click',async()=>{
-  calc(); const q=window.quote;
-  const txt=`COTIZADOR KIMA STORE — GUATEMALA\nProducto: ${q.name||'Sin nombre'}\nProducto: ${money(q.product)}\nEnvío internacional / casillero: ${money(q.shipping)}\nUnidades: ${q.qty}\nComisión vendedor (${q.sellerFeePct}%): ${money(q.sellerFee)}\nBase estimada para impuestos: ${money(q.taxBase)}\nDAI supuesto (${q.daiPct}%): ${money(q.dai)}\nIVA supuesto (${q.ivaPct}%): ${money(q.iva)}\nGastos courier (${q.courierPctPct}%): ${money(q.courierPct)}\nCargo fijo courier: ${money(q.courierFixed)}\nOtros gastos: ${money(q.other)}\nCosto total estimado: ${money(q.total)}\nCosto unitario: ${money(q.unit)}\nPrecio venta: ${money(q.sale)}\nComisión tarjeta: ${q.feePct}%\nGanancia unitaria estimada: ${money(q.profit)}\nMargen estimado: ${q.margin.toFixed(1)}%`;
-  try{await navigator.clipboard.writeText(txt);el('copyStatus').textContent='Cotización copiada. Ya podés pegarla en tus notas o mensaje.'}
-  catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();el('copyStatus').textContent='Cotización copiada.'}
+['productCost','purchaseTax','exchange','factor','margin','saleTax','taxMode'].forEach(id=>$(id).addEventListener('input',calculate));
+$('saleTax').addEventListener('input',()=>{$('saleTax').dataset.touched='1';calculate()});
+$('taxMode').addEventListener('change',()=>{$('saleTax').dataset.touched='0';$('saleTax').value=$('taxMode').value==='small'?'5':$('taxMode').value==='vat'?'12':'0';calculate()});
+$('reset').addEventListener('click',()=>{
+  Object.entries({productCost:32,purchaseTax:7,exchange:7.7,factor:1.656,margin:35,saleTax:12}).forEach(([k,v])=>$(k).value=v);
+  $('saleTax').dataset.touched='0';$('taxMode').value='vat';calculate();
 });
-el('reset').addEventListener('click',()=>{const defaults={name:'',product:'500',shipping:'0',sellerFee:'0',qty:'1',other:'0',dai:'15',iva:'12',courierPct:'6',courierFixed:'0',sale:'350',fee:'0',localShip:'0',pack:'0'};for(const [k,v] of Object.entries(defaults))el(k).value=v;calc();el('copyStatus').textContent=''});
 if('serviceWorker' in navigator && location.protocol.startsWith('http')) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-calc();
+calculate();
 </script>
 </body>
 </html>
